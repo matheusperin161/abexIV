@@ -138,7 +138,7 @@
                   <label class="block text-yellow-800 font-medium"
                     >Saldo Atual</label
                   >
-                  <p class="text-yellow-700 text-lg font-bold">R$ 25,00</p>
+                  <p id="currentBalance" class="text-yellow-700 text-lg font-bold">Carregando Saldo...</p>
                 </div>
                 <div>
                   <label class="block text-yellow-800 font-medium"
@@ -440,3 +440,84 @@
 </html>
 
 <link rel="icon" href="favicon.png" type="image/png" />
+
+
+    <script>
+      AOS.init();
+      feather.replace();
+
+      function goBack() {
+        window.history.back();
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        fetchUserProfile();
+      });
+
+      async function fetchUserProfile() {
+        try {
+          const response = await fetch('/api/profile');
+          const data = await response.json();
+
+          if (response.ok) {
+            document.getElementById('userName').innerText = data.username;
+            document.getElementById('userEmail').innerText = data.email;
+            document.getElementById('usernameInput').value = data.username;
+            document.getElementById('emailInput').value = data.email;
+            document.getElementById('currentBalance').innerText = `R$ ${parseFloat(data.card_balance).toFixed(2).replace('.', ',')}`;
+          } else {
+            console.error('Erro ao buscar perfil:', data.error);
+            // Redirecionar para login se não autenticado
+            if (response.status === 401) {
+              window.location.href = '/login.html';
+            }
+          }
+        } catch (error) {
+          console.error('Erro na requisição:', error);
+          // Tratar erro de rede ou servidor
+        }
+      }
+
+      async function updateProfile() {
+        const username = document.getElementById('usernameInput').value;
+        const email = document.getElementById('emailInput').value;
+        const password = document.getElementById('passwordInput').value;
+        const confirmPassword = document.getElementById('confirmPasswordInput').value;
+
+        if (password && password !== confirmPassword) {
+          alert('As senhas não coincidem!');
+          return;
+        }
+
+        const updateData = {
+          username: username,
+          email: email,
+        };
+        if (password) {
+          updateData.password = password;
+        }
+
+        try {
+          const response = await fetch('/profile', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updateData),
+          });
+          const data = await response.json();
+
+          if (response.ok) {
+            alert(data.message);
+            fetchUserProfile(); // Atualizar dados após sucesso
+          } else {
+            alert('Erro ao atualizar perfil: ' + data.error);
+          }
+        } catch (error) {
+          console.error('Erro na requisição:', error);
+          alert('Erro na requisição de atualização de perfil.');
+        }
+      }
+    </script>
+  </body>
+</html>
