@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro - Mobilidade Urbana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="shortcut icon" href="./img/icone_site.png" type="image/x-icon" />
+    <style>
+      .bg-bus {
+        background-image: url("./img/BuszApp_cadastro_448x697.png");
+        background-size: cover;
+        background-position: center;
+      }
+    </style>
+  
+    <style>
+      /* Estilos para o tema escuro */
+      .dark .bg-yellow-50 {
+        background-color: #1a202c; /* Cinza escuro */
+      }
+      .dark .bg-white {
+        background-color: #2d3748;
+      }
+      .dark .text-yellow-800 {
+        color: #f7fafc; /* Branco */
+      }
+      .dark .text-yellow-600 {
+        color: #a0aec0; /* Cinza claro */
+      }
+      .dark .text-yellow-700 {
+        color: #cbd5e0; /* Cinza mais claro */
+      }
+      .dark .border-yellow-300 {
+        border-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .bg-red-100 {
+        background-color: #4a5568;
+      }
+      .dark .border-red-400 {
+        border-color: #718096;
+      }
+      .dark .text-red-700 {
+        color: #f7fafc;
+      }
+      .dark .bg-green-100 {
+        background-color: #4a5568;
+      }
+      .dark .border-green-400 {
+        border-color: #718096;
+      }
+      .dark .text-green-700 {
+        color: #f7fafc;
+      }
+      .dark .bg-white {
+        background-color: #2d3748;
+      }
+      .dark .text-yellow-500 {
+        color: #cbd5e0;
+      }
+    </style>
+  </head>
+  <body class="bg-yellow-50 min-h-screen flex items-center justify-center">
+    <div
+      class="max-w-4xl w-full bg-white rounded-xl shadow-2xl overflow-hidden"
+    >
+      <div class="md:flex">
+        <div class="md:w-1/2 bg-bus"></div>
+        <div class="p-8 md:w-1/2">
+          <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl font-bold text-yellow-800">Crie sua conta</h2>
+            <a href="index.html" class="text-yellow-600 hover:text-yellow-800">
+              <i data-feather="arrow-left"></i>
+            </a>
+          </div>
+
+          <form id="registerForm" class="space-y-6">
+            <div
+              id="errorMessage"
+              class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded"
+            ></div>
+            <div
+              id="successMessage"
+              class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded"
+            ></div>
+
+            <div>
+              <label
+                for="username"
+                class="block text-sm font-medium text-yellow-700"
+                >Nome de usuário</label
+              >
+              <div class="mt-1 relative rounded-md shadow-sm">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <i data-feather="user" class="h-5 w-5 text-yellow-400"></i>
+                </div>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  required
+                  class="focus:ring-yellow-500 focus:border-yellow-500 block w-full pl-10 sm:text-sm border-yellow-300 rounded-md py-3"
+                  placeholder="Seu nome de usuário"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                for="email"
+                class="block text-sm font-medium text-yellow-700"
+                >E-mail</label
+              >
+              <div class="mt-1 relative rounded-md shadow-sm">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <i data-feather="mail" class="h-5 w-5 text-yellow-400"></i>
+                </div>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  class="focus:ring-yellow-500 focus:border-yellow-500 block w-full pl-10 sm:text-sm border-yellow-300 rounded-md py-3"
+                  placeholder="seu@email.com"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                for="password"
+                class="block text-sm font-medium text-yellow-700"
+                >Senha</label
+              >
+              <div class="mt-1 relative rounded-md shadow-sm">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <i data-feather="lock" class="h-5 w-5 text-yellow-400"></i>
+                </div>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  required
+                  class="focus:ring-yellow-500 focus:border-yellow-500 block w-full pl-10 sm:text-sm border-yellow-300 rounded-md py-3"
+                  placeholder="Sua senha"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                for="confirmPassword"
+                class="block text-sm font-medium text-yellow-700"
+                >Confirmar Senha</label
+              >
+              <div class="mt-1 relative rounded-md shadow-sm">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <i data-feather="lock" class="h-5 w-5 text-yellow-400"></i>
+                </div>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  required
+                  class="focus:ring-yellow-500 focus:border-yellow-500 block w-full pl-10 sm:text-sm border-yellow-300 rounded-md py-3"
+                  placeholder="Confirme sua senha"
+                />
+              </div>
+            </div>
+            <div class="flex items-center">
+              <input
+                id="terms"
+                name="terms"
+                type="checkbox"
+                required
+                class="h-4 w-4 text-yellow-600 focus:ring-yellow-500 border-yellow-300 rounded"
+              />
+              <label for="terms" class="ml-2 block text-sm text-yellow-700">
+                Eu concordo com os
+                <a href="#" class="text-yellow-600 hover:text-yellow-500"
+                  >Termos de Serviço</a
+                >
+                e
+                <a href="#" class="text-yellow-600 hover:text-yellow-500"
+                  >Política de Privacidade</a
+                >
+              </label>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                id="registerButton"
+                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+              >
+                Cadastrar
+              </button>
+            </div>
+          </form>
+
+          <div class="mt-6">
+            <div class="relative">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-yellow-300"></div>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span class="px-2 bg-white text-yellow-500"
+                  >Já tem uma conta?</span
+                >
+              </div>
+            </div>
+
+            <div class="mt-6 text-center">
+              <a
+                href="login.html"
+                class="font-medium text-yellow-700 hover:text-yellow-600"
+                >Faça login aqui</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      feather.replace();
+
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          const username = document.getElementById("username").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+          const errorDiv = document.getElementById("errorMessage");
+          const successDiv = document.getElementById("successMessage");
+          const registerButton = document.getElementById("registerButton");
+
+          // Limpar mensagens
+          errorDiv.classList.add("hidden");
+          successDiv.classList.add("hidden");
+
+          // Validar senhas
+          if (password !== confirmPassword) {
+            errorDiv.textContent = "As senhas não coincidem";
+            errorDiv.classList.remove("hidden");
+            return;
+          }
+
+          // Desabilitar botão durante o registro
+          registerButton.disabled = true;
+          registerButton.textContent = "Cadastrando...";
+
+          try {
+            const response = await fetch("/api/register", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username: username,
+                email: email,
+                password: password,
+              }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              // Registro bem-sucedido
+              successDiv.textContent =
+                "Cadastro realizado com sucesso! Redirecionando para login...";
+              successDiv.classList.remove("hidden");
+
+              // Redirecionar para login após 2 segundos
+              setTimeout(() => {
+                window.location.href = "login.html";
+              }, 2000);
+            } else {
+              // Mostrar erro
+              errorDiv.textContent = data.error || "Erro ao fazer cadastro";
+              errorDiv.classList.remove("hidden");
+            }
+          } catch (error) {
+            console.error("Erro:", error);
+            errorDiv.textContent = "Erro de conexão. Tente novamente.";
+            errorDiv.classList.remove("hidden");
+          } finally {
+            // Reabilitar botão
+            registerButton.disabled = false;
+            registerButton.textContent = "Cadastrar";
+          }
+        });
+    </script>
+  
+    <script>
+      // Script de inicialização do tema
+      function applyTheme(isDark) {
+        const html = document.documentElement;
+        if (isDark) {
+          html.classList.add('dark');
+          html.classList.remove('light');
+        } else {
+          html.classList.remove('dark');
+          html.classList.add('light');
+        }
+        feather.replace();
+      }
+
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      let isDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+      applyTheme(isDark);
+    </script>
+  </body>
+</html>
+
+<link rel="icon" href="favicon.png" type="image/png" />

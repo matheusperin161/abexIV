@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recarga - Mobilidade Urbana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="shortcut icon" href="./img/icone_site.png" type="image/x-icon" />
+  
+    <style>
+      /* Estilos para o tema escuro */
+      .dark .bg-yellow-50 {
+        background-color: #1a202c; /* Cinza escuro */
+      }
+      .dark .bg-yellow-500 {
+        background-color: #2d3748; /* Cinza um pouco mais claro */
+      }
+      .dark .text-white {
+        color: #f7fafc; /* Branco */
+      }
+      .dark .text-yellow-800 {
+        color: #f7fafc; /* Branco */
+      }
+      .dark .text-yellow-600 {
+        color: #a0aec0; /* Cinza claro */
+      }
+      .dark .text-yellow-700 {
+        color: #cbd5e0; /* Cinza mais claro */
+      }
+      .dark .bg-white {
+        background-color: #2d3748;
+      }
+      .dark .border-yellow-200 {
+        border-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .divide-yellow-100 > :not([hidden]) ~ :not([hidden]) {
+        border-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .hover\:bg-yellow-50:hover {
+        background-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .bg-yellow-100 {
+        background-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .bg-gray-200 {
+        background-color: #4a5568;
+      }
+      .dark .text-gray-700 {
+        color: #f7fafc;
+      }
+      .dark .border-yellow-300 {
+        border-color: #4a5568;
+      }
+      .dark .bg-green-50 {
+        background-color: #4a5568;
+      }
+      .dark .text-green-800 {
+        color: #f7fafc;
+      }
+      .dark .text-green-700 {
+        color: #a0aec0;
+      }
+      .dark .text-green-600 {
+        color: #a0aec0;
+      }
+      .dark .bg-blue-50 {
+        background-color: #4a5568;
+      }
+      .dark .text-blue-800 {
+        color: #f7fafc;
+      }
+      .dark .text-blue-700 {
+        color: #a0aec0;
+      }
+      .dark .text-blue-600 {
+        color: #a0aec0;
+      }
+    </style>
+  </head>
+  <body class="bg-yellow-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-yellow-500 text-white shadow-lg">
+      <div
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-2">
+          <i data-feather="bus" class="w-8 h-8"></i>
+          <h1 class="text-2xl font-bold">Recarga de Cartão</h1>
+        </div>
+        <div class="flex space-x-4">
+          <button
+            onclick="window.location.href='dashboard.html'"
+            class="p-2 rounded-full hover:bg-yellow-600 transition"
+          >
+            <i data-feather="arrow-left" class="w-6 h-6"></i>
+        <div class="flex space-x-4">
+          <button
+            onclick="window.location.href='rating.html'"
+            class="p-2 rounded-full hover:bg-yellow-600 transition"
+            title="Avaliação"
+          >
+            <i data-feather="star" class="w-6 h-6"></i>
+          </button>
+          <button
+            onclick="window.location.href='profile.html'"
+            class="p-2 rounded-full hover:bg-yellow-600 transition"
+            title="Perfil"
+          >
+            <i data-feather="user" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="p-6 border-b border-yellow-200">
+          <h2 class="text-2xl font-bold text-yellow-800">
+            Recarregue seu cartão
+          </h2>
+          <p class="text-yellow-600">
+            Informe os dados para realizar a recarga
+          </p>
+        </div>
+
+        <div class="p-6 space-y-6">
+          <!-- Valor da Recarga -->
+          <div>
+            <label
+              for="amount"
+              class="block text-sm font-medium text-yellow-700 mb-1"
+              >Valor da Recarga</label
+            >
+            <div class="grid grid-cols-4 gap-2 mb-4">
+              <button
+                onclick="selectAmount(10)"
+                class="py-2 bg-yellow-100 rounded hover:bg-yellow-200 transition amount-btn"
+              >
+                R$ 10
+              </button>
+              <button
+                onclick="selectAmount(20)"
+                class="py-2 bg-yellow-100 rounded hover:bg-yellow-200 transition amount-btn"
+              >
+                R$ 20
+              </button>
+              <button
+                onclick="selectAmount(50)"
+                class="py-2 bg-yellow-100 rounded hover:bg-yellow-200 transition amount-btn"
+              >
+                R$ 50
+              </button>
+              <button
+                onclick="showCustomAmount()"
+                class="py-2 bg-yellow-100 rounded hover:bg-yellow-200 transition amount-btn"
+              >
+                Outro
+              </button>
+            </div>
+            <div id="custom-amount-div" class="hidden">
+              <input
+                type="number"
+                id="custom-amount"
+                class="focus:ring-yellow-500 focus:border-yellow-500 block w-full sm:text-sm border-yellow-300 rounded-md py-3"
+                placeholder="Digite o valor"
+                min="1"
+                step="0.01"
+              />
+            </div>
+            <div class="mt-2">
+              <span class="text-lg font-bold text-yellow-800">Valor selecionado: R$ <span id="selected-amount">0,00</span></span>
+            </div>
+          </div>
+
+          <!-- Forma de Pagamento -->
+          <div class="pt-4">
+            <label
+              for="payment-method"
+              class="block text-sm font-medium text-yellow-700 mb-3"
+              >Forma de Pagamento</label
+            >
+            <div class="grid grid-cols-3 gap-4">
+              <button
+                id="cartao-button"
+                onclick="selectPaymentMethod('cartao')"
+                class="py-3 px-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-yellow-500 hover:text-white transition font-medium payment-method-btn"
+              >
+                <i data-feather="credit-card" class="w-5 h-5 inline mr-2"></i>
+                Cartão
+              </button>
+              <button
+                id="pix-button"
+                onclick="selectPaymentMethod('pix')"
+                class="py-3 px-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-green-500 hover:text-white transition font-medium payment-method-btn"
+              >
+                <i data-feather="smartphone" class="w-5 h-5 inline mr-2"></i>
+                Pix
+              </button>
+              <button
+                id="boleto-button"
+                onclick="selectPaymentMethod('boleto')"
+                class="py-3 px-4 bg-gray-200 text-gray-700 rounded-lg hover:bg-blue-500 hover:text-white transition font-medium payment-method-btn"
+              >
+                <i data-feather="file-text" class="w-5 h-5 inline mr-2"></i>
+                Boleto
+              </button>
+            </div>
+          </div>
+
+          <!-- Campos do Cartão -->
+          <div id="cartao-fields" class="hidden space-y-4">
+            <div>
+              <label
+                for="card-number"
+                class="block text-sm font-medium text-yellow-700 mb-1"
+                >Número do Cartão</label
+              >
+              <div class="relative rounded-md shadow-sm">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <i
+                    data-feather="credit-card"
+                    class="h-5 w-5 text-yellow-400"
+                  ></i>
+                </div>
+                <input
+                  type="text"
+                  id="card-number"
+                  class="focus:ring-yellow-500 focus:border-yellow-500 block w-full pl-10 sm:text-sm border-yellow-300 rounded-md py-3"
+                  placeholder="0000 0000 0000 0000"
+                  maxlength="19"
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label
+                  for="card-expiry"
+                  class="block text-sm font-medium text-yellow-700 mb-1"
+                  >Validade</label
+                >
+                <input
+                  type="text"
+                  id="card-expiry"
+                  class="focus:ring-yellow-500 focus:border-yellow-500 block w-full sm:text-sm border-yellow-300 rounded-md py-3"
+                  placeholder="MM/AA"
+                  maxlength="5"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="card-cvv"
+                  class="block text-sm font-medium text-yellow-700 mb-1"
+                  >CVV</label
+                >
+                <input
+                  type="text"
+                  id="card-cvv"
+                  class="focus:ring-yellow-500 focus:border-yellow-500 block w-full sm:text-sm border-yellow-300 rounded-md py-3"
+                  placeholder="123"
+                  maxlength="4"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                for="card-name"
+                class="block text-sm font-medium text-yellow-700 mb-1"
+                >Nome no Cartão</label
+              >
+              <input
+                type="text"
+                id="card-name"
+                class="focus:ring-yellow-500 focus:border-yellow-500 block w-full sm:text-sm border-yellow-300 rounded-md py-3"
+                placeholder="Como no cartão"
+              />
+            </div>
+          </div>
+
+          <!-- Campos do PIX -->
+          <div id="pix-fields" class="hidden space-y-4">
+            <div class="bg-green-50 p-4 rounded-lg">
+              <h3 class="text-lg font-semibold text-green-800 mb-2">Pagamento via PIX</h3>
+              <p class="text-green-700 mb-4">Após confirmar, você receberá um QR Code para realizar o pagamento via PIX.</p>
+              <div class="text-sm text-green-600">
+                <p>• Pagamento instantâneo</p>
+                <p>• Disponível 24h por dia</p>
+                <p>• Sem taxas adicionais</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Campos do Boleto -->
+          <div id="boleto-fields" class="hidden space-y-4">
+            <div class="bg-blue-50 p-4 rounded-lg">
+              <h3 class="text-lg font-semibold text-blue-800 mb-2">Pagamento via Boleto</h3>
+              <p class="text-blue-700 mb-4">Após confirmar, você receberá um boleto bancário para pagamento.</p>
+              <div class="text-sm text-blue-600">
+                <p>• Vencimento em 3 dias úteis</p>
+                <p>• Pagamento em qualquer banco</p>
+                <p>• Confirmação em até 2 dias úteis</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botão Finalizar -->
+          <div id="finalize-button" class="pt-4 hidden">
+            <button
+              onclick="finalizarRecarga()"
+              class="w-full py-3 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition font-medium"
+            >
+              Finalizar Recarga
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recarga Confirmada -->
+      <div
+        id="recargaConfirmada"
+        class="bg-white rounded-xl shadow-lg overflow-hidden mt-6 hidden"
+      >
+        <div class="p-6 border-b border-yellow-200 bg-yellow-50">
+          <h2 class="text-xl font-bold text-yellow-800 flex items-center">
+            <i
+              data-feather="check-circle"
+              class="w-6 h-6 text-green-500 mr-2"
+            ></i>
+            Recarga confirmada!
+          </h2>
+        </div>
+
+        <div class="p-6">
+          <div class="flex justify-between mb-4">
+            <span class="text-yellow-600">Número do cartão:</span>
+            <span class="font-medium">•••• •••• •••• 1234</span>
+          </div>
+
+          <div class="flex justify-between mb-4">
+            <span class="text-yellow-600">Valor recarregado:</span>
+            <span class="font-medium">R$ 20,00</span>
+          </div>
+
+          <div class="flex justify-between mb-6">
+            <span class="text-yellow-600">Data e hora:</span>
+            <span class="font-medium">10/06/2023 14:30</span>
+          </div>
+
+          <div class="pt-4 border-t border-yellow-200">
+            <button
+              class="w-full py-3 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition font-medium"
+            >
+              <i data-feather="download" class="w-5 h-5 inline mr-2"></i>
+              Baixar comprovante
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      feather.replace();
+
+      let selectedAmount = 0;
+      let selectedPaymentMethod = '';
+
+      function selectAmount(amount) {
+        selectedAmount = amount;
+        document.getElementById('selected-amount').textContent = amount.toFixed(2).replace('.', ',');
+        
+        // Reset custom amount
+        document.getElementById('custom-amount-div').classList.add('hidden');
+        document.getElementById('custom-amount').value = '';
+        
+        // Highlight selected button
+        document.querySelectorAll('.amount-btn').forEach(btn => {
+          btn.classList.remove('bg-yellow-500', 'text-white');
+          btn.classList.add('bg-yellow-100');
+        });
+        event.target.classList.remove('bg-yellow-100');
+        event.target.classList.add('bg-yellow-500', 'text-white');
+        
+        checkFormCompletion();
+      }
+
+      function showCustomAmount() {
+        document.getElementById('custom-amount-div').classList.remove('hidden');
+        document.getElementById('custom-amount').focus();
+        
+        // Highlight selected button
+        document.querySelectorAll('.amount-btn').forEach(btn => {
+          btn.classList.remove('bg-yellow-500', 'text-white');
+          btn.classList.add('bg-yellow-100');
+        });
+        event.target.classList.remove('bg-yellow-100');
+        event.target.classList.add('bg-yellow-500', 'text-white');
+      }
+
+      document.getElementById('custom-amount').addEventListener('input', function() {
+        const value = parseFloat(this.value) || 0;
+        selectedAmount = value;
+        document.getElementById('selected-amount').textContent = value.toFixed(2).replace('.', ',');
+        checkFormCompletion();
+      });
+
+      function selectPaymentMethod(method) {
+        selectedPaymentMethod = method;
+        
+        // Hide all payment fields
+        document.getElementById('cartao-fields').classList.add('hidden');
+        document.getElementById('pix-fields').classList.add('hidden');
+        document.getElementById('boleto-fields').classList.add('hidden');
+        
+        // Reset all buttons
+        document.querySelectorAll('.payment-method-btn').forEach(btn => {
+          btn.classList.remove('bg-yellow-500', 'bg-green-500', 'bg-blue-500', 'text-white');
+          btn.classList.add('bg-gray-200', 'text-gray-700');
+        });
+        
+        // Show selected method fields and highlight button
+        if (method === 'cartao') {
+          document.getElementById('cartao-fields').classList.remove('hidden');
+          document.getElementById('cartao-button').classList.remove('bg-gray-200', 'text-gray-700');
+          document.getElementById('cartao-button').classList.add('bg-yellow-500', 'text-white');
+        } else if (method === 'pix') {
+          document.getElementById('pix-fields').classList.remove('hidden');
+          document.getElementById('pix-button').classList.remove('bg-gray-200', 'text-gray-700');
+          document.getElementById('pix-button').classList.add('bg-green-500', 'text-white');
+        } else if (method === 'boleto') {
+          document.getElementById('boleto-fields').classList.remove('hidden');
+          document.getElementById('boleto-button').classList.remove('bg-gray-200', 'text-gray-700');
+          document.getElementById('boleto-button').classList.add('bg-blue-500', 'text-white');
+        }
+        
+        checkFormCompletion();
+      }
+
+      function checkFormCompletion() {
+        const finalizeButton = document.getElementById('finalize-button');
+        
+        if (selectedAmount > 0 && selectedPaymentMethod) {
+          finalizeButton.classList.remove('hidden');
+        } else {
+          finalizeButton.classList.add('hidden');
+        }
+      }
+
+      async function finalizarRecarga() {
+        if (selectedAmount <= 0) {
+          alert('Por favor, selecione um valor para recarga.');
+          return;
+        }
+        
+        if (!selectedPaymentMethod) {
+          alert('Por favor, selecione um método de pagamento.');
+          return;
+        }
+
+        // Validar campos do cartão se necessário
+        if (selectedPaymentMethod === 'cartao') {
+          const cardNumber = document.getElementById('card-number').value;
+          const cardExpiry = document.getElementById('card-expiry').value;
+          const cardCvv = document.getElementById('card-cvv').value;
+          const cardName = document.getElementById('card-name').value;
+          
+          if (!cardNumber || !cardExpiry || !cardCvv || !cardName) {
+            alert('Por favor, preencha todos os campos do cartão.');
+            return;
+          }
+        }
+
+        try {
+          const response = await fetch('/api/recharge', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              amount: selectedAmount,
+              payment_method: selectedPaymentMethod
+            })
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            // Atualizar informações na confirmação
+            document.querySelector('#recargaConfirmada .font-medium:nth-child(2)').textContent = `R$ ${selectedAmount.toFixed(2).replace('.', ',')}`;
+            document.querySelector('#recargaConfirmada .font-medium:nth-child(4)').textContent = new Date().toLocaleString('pt-BR');
+            
+            // Notificar outras abas sobre a recarga
+            localStorage.setItem('recharge_completed', Date.now().toString());
+            
+            // Mostrar confirmação
+            document.getElementById("recargaConfirmada").classList.remove("hidden");
+            window.scrollTo({
+              top: document.getElementById("recargaConfirmada").offsetTop - 20,
+              behavior: "smooth",
+            });
+
+            // Limpar formulário
+            selectedAmount = 0;
+            selectedPaymentMethod = '';
+            document.getElementById('selected-amount').textContent = '0,00';
+            document.getElementById('finalize-button').classList.add('hidden');
+            
+            // Reset buttons
+            document.querySelectorAll('.amount-btn, .payment-method-btn').forEach(btn => {
+              btn.classList.remove('bg-yellow-500', 'bg-green-500', 'bg-blue-500', 'text-white');
+              btn.classList.add('bg-yellow-100');
+            });
+            document.querySelectorAll('.payment-method-btn').forEach(btn => {
+              btn.classList.remove('bg-yellow-100');
+              btn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            
+            // Hide fields
+            document.getElementById('cartao-fields').classList.add('hidden');
+            document.getElementById('pix-fields').classList.add('hidden');
+            document.getElementById('boleto-fields').classList.add('hidden');
+            document.getElementById('custom-amount-div').classList.add('hidden');
+            
+            // Clear form fields
+            document.getElementById('card-number').value = '';
+            document.getElementById('card-expiry').value = '';
+            document.getElementById('card-cvv').value = '';
+            document.getElementById('card-name').value = '';
+            document.getElementById('custom-amount').value = '';
+            
+          } else {
+            alert('Erro ao processar recarga: ' + data.error);
+          }
+        } catch (error) {
+          console.error('Erro:', error);
+          // alert('Erro ao conectar com o servidor. Tente novamente.');
+        }
+      }
+
+      // Formatação automática dos campos do cartão
+      document.getElementById('card-number').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+        let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+        e.target.value = formattedValue;
+      });
+
+      document.getElementById('card-expiry').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+          value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+        e.target.value = value;
+      });
+
+      document.getElementById('card-cvv').addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+      });
+    </script>
+  
+    <script>
+      // Script de inicialização do tema
+      function applyTheme(isDark) {
+        const html = document.documentElement;
+        if (isDark) {
+          html.classList.add('dark');
+          html.classList.remove('light');
+        } else {
+          html.classList.remove('dark');
+          html.classList.add('light');
+        }
+        feather.replace();
+      }
+
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      let isDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+      applyTheme(isDark);
+    </script>
+  </body>
+</html>
+

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acompanhamento - Mobilidade Urbana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="shortcut icon" href="./img/icone_site.png" type="image/x-icon" />
+  
+    <style>
+      /* Estilos para o tema escuro */
+      .dark .bg-yellow-50 {
+        background-color: #1a202c; /* Cinza escuro */
+      }
+      .dark .bg-yellow-500 {
+        background-color: #2d3748; /* Cinza um pouco mais claro */
+      }
+      .dark .text-white {
+        color: #f7fafc; /* Branco */
+      }
+      .dark .text-yellow-800 {
+        color: #f7fafc; /* Branco */
+      }
+      .dark .text-yellow-600 {
+        color: #a0aec0; /* Cinza claro */
+      }
+      .dark .bg-white {
+        background-color: #2d3748;
+      }
+      .dark .border-yellow-200 {
+        border-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .divide-yellow-100 > :not([hidden]) ~ :not([hidden]) {
+        border-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .hover\:bg-yellow-50:hover {
+        background-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .bg-yellow-100 {
+        background-color: #4a5568; /* Cinza escuro */
+      }
+    </style>
+  </head>
+  <body class="bg-yellow-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-yellow-500 text-white shadow-lg">
+      <div
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-2">
+          <i data-feather="bus" class="w-8 h-8"></i>
+          <h1 class="text-2xl font-bold">Acompanhamento de Ônibus</h1>
+        </div>
+        <div class="flex space-x-4">
+          <button
+            onclick="window.location.href='dashboard.html'"
+            class="p-2 rounded-full hover:bg-yellow-600 transition"
+          >
+            <i data-feather="arrow-left" class="w-6 h-6"></i>
+          </button>
+          <button
+            onclick="window.location.href='rating.html'"
+            class="p-2 rounded-full hover:bg-yellow-600 transition"
+            title="Avaliação"
+          >
+            <i data-feather="star" class="w-6 h-6"></i>
+          </button>
+          <button
+            onclick="window.location.href='profile.html'"
+            class="p-2 rounded-full hover:bg-yellow-600 transition"
+            title="Perfil"
+          >
+            <i data-feather="user" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="p-6 border-b border-yellow-200">
+          <h2 class="text-2xl font-bold text-yellow-800">Linhas disponíveis</h2>
+          <p class="text-yellow-600">
+            Selecione uma linha para acompanhar em tempo real
+          </p>
+        </div>
+
+        <div class="divide-y divide-yellow-100">
+          <!-- Linha 1 -->
+          <div
+            class="p-4 hover:bg-yellow-50 transition cursor-pointer"
+            onclick="showHorarios('01')"
+          >
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="font-bold text-yellow-800">Linha 01 - Cristo Rei</h3>
+                <p class="text-sm text-yellow-600">
+                  Terminal Urbano de Chapecó
+                </p>
+              </div>
+              <i data-feather="chevron-right" class="text-yellow-500"></i>
+            </div>
+          </div>
+
+          <!-- Linha 2 -->
+          <div
+            class="p-4 hover:bg-yellow-50 transition cursor-pointer"
+            onclick="showHorarios('02')"
+          >
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="font-bold text-yellow-800">Linha 02 - Tomazelli</h3>
+                <p class="text-sm text-yellow-600">
+                  Terminal Urbano de Chapecó
+                </p>
+              </div>
+              <i data-feather="chevron-right" class="text-yellow-500"></i>
+            </div>
+          </div>
+
+          <!-- Linha 3 -->
+          <div
+            class="p-4 hover:bg-yellow-50 transition cursor-pointer"
+            onclick="showHorarios('03')"
+          >
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="font-bold text-yellow-800">
+                  Linha 03 - Parque das Palmeiras
+                </h3>
+                <p class="text-sm text-yellow-600">
+                  Terminal Urbano de Chapecó
+                </p>
+              </div>
+              <i data-feather="chevron-right" class="text-yellow-500"></i>
+            </div>
+          </div>
+
+          <!-- Linha 4 -->
+          <div
+            class="p-4 hover:bg-yellow-50 transition cursor-pointer"
+            onclick="showHorarios('04')"
+          >
+            <div class="flex justify-between items-center">
+              <div>
+                <h3 class="font-bold text-yellow-800">Linha 04 - Vila Real</h3>
+                <p class="text-sm text-yellow-600">
+                  Terminal Urbano de Chapecó
+                </p>
+              </div>
+              <i data-feather="chevron-right" class="text-yellow-500"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Horários Modal -->
+      <div
+        id="horariosModal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
+      >
+        <div class="bg-white rounded-xl p-6 max-w-md w-full">
+          <div class="flex justify-between items-center mb-4">
+            <h3 id="linhaTitle" class="text-xl font-bold text-yellow-800">
+              Horários - Linha 01
+            </h3>
+            <button
+              onclick="hideHorarios()"
+              class="text-yellow-500 hover:text-yellow-700"
+            >
+              <i data-feather="x"></i>
+            </button>
+          </div>
+
+          <div class="space-y-3">
+            <div
+              class="p-3 bg-yellow-100 rounded-lg flex justify-between items-center"
+            >
+              <span class="font-medium">06:00</span>
+              <button
+                onclick="acompanharOnibus()"
+                class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm"
+              >
+                Acompanhar
+              </button>
+            </div>
+
+            <div
+              class="p-3 bg-yellow-100 rounded-lg flex justify-between items-center"
+            >
+              <span class="font-medium">07:30</span>
+              <button
+                onclick="acompanharOnibus()"
+                class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm"
+              >
+                Acompanhar
+              </button>
+            </div>
+
+            <div
+              class="p-3 bg-yellow-100 rounded-lg flex justify-between items-center"
+            >
+              <span class="font-medium">09:00</span>
+              <button
+                onclick="acompanharOnibus()"
+                class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm"
+              >
+                Acompanhar
+              </button>
+            </div>
+
+            <div
+              class="p-3 bg-yellow-100 rounded-lg flex justify-between items-center"
+            >
+              <span class="font-medium">10:30</span>
+              <button
+                onclick="acompanharOnibus()"
+                class="px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm"
+              >
+                Acompanhar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mapa Modal -->
+      <div
+        id="mapaModal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
+      >
+        <div class="bg-white rounded-xl p-6 max-w-2xl w-full">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold text-yellow-800">
+              Acompanhamento em tempo real
+            </h3>
+            <button
+              onclick="hideMapa()"
+              class="text-yellow-500 hover:text-yellow-700"
+            >
+              <i data-feather="x"></i>
+            </button>
+          </div>
+
+          <div
+            class="h-64 bg-yellow-100 rounded-lg mb-4 flex items-center justify-center"
+          >
+            <p class="text-yellow-600">
+              Mapa com a localização do ônibus em tempo real
+            </p>
+          </div>
+
+          <div class="bg-yellow-50 p-4 rounded-lg">
+            <div class="flex items-center space-x-3">
+              <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+              <div>
+                <p class="font-medium">Linha 01 - Cristo Rei</p>
+                <p class="text-sm text-yellow-600">
+                  Próxima parada: Av. Central em 5 min
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      feather.replace();
+
+      function showHorarios(linha) {
+        document.getElementById(
+          "linhaTitle"
+        ).textContent = `Horários - Linha ${linha}`;
+        document.getElementById("horariosModal").classList.remove("hidden");
+      }
+
+      function hideHorarios() {
+        document.getElementById("horariosModal").classList.add("hidden");
+      }
+
+      function acompanharOnibus() {
+        hideHorarios();
+        document.getElementById("mapaModal").classList.remove("hidden");
+      }
+
+      function hideMapa() {
+        document.getElementById("mapaModal").classList.add("hidden");
+      }
+    </script>
+  
+    <script>
+      // Script de inicialização do tema (igual ao profile.html)
+      function applyTheme(isDark) {
+        const html = document.documentElement;
+        if (isDark) {
+          html.classList.add('dark');
+          html.classList.remove('light');
+        } else {
+          html.classList.remove('dark');
+          html.classList.add('light');
+        }
+        feather.replace();
+      }
+
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      let isDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+      applyTheme(isDark);
+    </script>
+  </body>
+</html>
+
+<link rel="icon" href="favicon.png" type="image/png" />

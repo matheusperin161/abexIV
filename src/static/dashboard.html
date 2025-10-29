@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Mobilidade Urbana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="shortcut icon" href="./img/icone_site.png" type="image/x-icon" />
+    <style>
+      .bg-bus {
+        background-image: url("http://static.photos/transport/1200x630/4");
+        background-size: cover;
+        background-position: center;
+      }
+    </style>
+  
+    <style>
+      /* Estilos para o tema escuro */
+      .dark .bg-yellow-50 {
+        background-color: #1a202c; /* Cinza escuro */
+      }
+      .dark .bg-yellow-500 {
+        background-color: #facc15; /* Cinza um pouco mais claro */
+      }
+      .dark .text-white {
+        color: #f7fafc; /* Branco */
+      }
+      .dark .text-yellow-800 {
+        color: #f7fafc; /* Branco */
+      }
+      .dark .text-yellow-600 {
+        color: #a0aec0; /* Cinza claro */
+      }
+      .dark .bg-white {
+        background-color: #2d3748;
+      }
+      .dark .border-yellow-200 {
+        border-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .divide-yellow-100 > :not([hidden]) ~ :not([hidden]) {
+        border-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .hover\:bg-yellow-50:hover {
+        background-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .bg-yellow-100 {
+        background-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .from-yellow-400 {
+        --tw-gradient-from: #facc15;
+        --tw-gradient-to: #4a5568;
+        --tw-gradient-stops: var(--tw-gradient-from), #4a5568;
+      }
+      .dark .to-yellow-600 {
+        --tw-gradient-to: #2d3748;
+      }
+    </style>
+  </head>
+  <body class="bg-yellow-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-yellow-500 text-white shadow-lg">
+      <div
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-2">
+          <i data-feather="bus" class="w-8 h-8"></i>
+          <h1 class="text-2xl font-bold">Mobilidade Urbana</h1>
+        </div>
+        <div class="flex space-x-4">
+          <button
+            onclick="window.location.href='rating.html'"
+            class="p-2 rounded-full hover:bg-yellow-600 transition"
+            title="Avaliação"
+          >
+            <i data-feather="star" class="w-6 h-6"></i>
+          </button>
+          <button
+            onclick="window.location.href='profile.html'"
+            class="p-2 rounded-full hover:bg-yellow-600 transition"
+            title="Perfil"
+          >
+            <i data-feather="user" class="w-6 h-6"></i>
+          </button>
+          <button
+            onclick="window.location.href='index.html'"
+            class="p-2 rounded-full hover:bg-yellow-600 transition"
+          >
+            <i data-feather="log-out" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+      <!-- Card de Saldo -->
+      <div class="mb-6">
+        <div
+          class="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-xl shadow-lg p-6 text-white"
+        >
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-lg font-medium opacity-90">Saldo do Cartão</h3>
+              <p id="cardBalance" class="text-3xl font-bold">R$ 0,00</p>
+            </div>
+            <div class="bg-white bg-opacity-20 p-3 rounded-full">
+              <i data-feather="credit-card" class="w-8 h-8"></i>
+            </div>
+          </div>
+          <div class="mt-4">
+            <button
+              onclick="window.location.href='recarga.html'"
+              class="bg-white text-yellow-600 px-4 py-2 rounded-lg font-medium hover:bg-yellow-50 transition"
+            >
+              Recarregar Cartão
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card Recarga -->
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition"
+        >
+          <div class="bg-yellow-400 p-4">
+            <i data-feather="credit-card" class="w-8 h-8 text-white"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-yellow-800 mb-2">
+              Recarga de Cartão
+            </h3>
+            <p class="text-yellow-600 mb-4">
+              Recarregue seu cartão de transporte de forma rápida e segura.
+            </p>
+            <button
+              onclick="window.location.href='recarga.html'"
+              class="w-full py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
+            >
+              Acessar
+            </button>
+          </div>
+        </div>
+
+        <!-- Card Acompanhamento -->
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition"
+        >
+          <div class="bg-yellow-400 p-4">
+            <i data-feather="map-pin" class="w-8 h-8 text-white"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-yellow-800 mb-2">
+              Acompanhamento de Ônibus
+            </h3>
+            <p class="text-yellow-600 mb-4">
+              Acompanhe em tempo real a localização dos ônibus das linhas
+              disponíveis.
+            </p>
+            <button
+              onclick="window.location.href='acompanhamento.html'"
+              class="w-full py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
+            >
+              Acessar
+            </button>
+          </div>
+        </div>
+
+        <!-- Card Rota -->
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition"
+        >
+          <div class="bg-yellow-400 p-4">
+            <i data-feather="navigation" class="w-8 h-8 text-white"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-yellow-800 mb-2">
+              Planejamento de Rota
+            </h3>
+            <p class="text-yellow-600 mb-4">
+              Planeje sua rota de forma eficiente com nossas sugestões de
+              trajeto.
+            </p>
+            <button
+              onclick="window.location.href='rota.html'"
+              class="w-full py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
+            >
+              Acessar
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      feather.replace();
+
+      // Função para carregar o saldo do usuário
+      async function loadUserBalance() {
+        try {
+          const response = await fetch("/api/balance", {
+            method: "GET",
+            credentials: "include",
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            const balanceElement = document.getElementById("cardBalance");
+            balanceElement.textContent = `R$ ${data.balance
+              .toFixed(2)
+              .replace(".", ",")}`;
+          } else if (response.status === 401) {
+            // Usuário não autenticado, redirecionar para login
+            window.location.href = "login.html";
+          }
+        } catch (error) {
+          console.error("Erro ao carregar saldo:", error);
+        }
+      }
+
+      // Função para atualizar o saldo periodicamente
+      function startBalanceUpdates() {
+        // Atualizar saldo a cada 30 segundos
+        setInterval(loadUserBalance, 30000);
+      }
+
+      // Função para verificar se houve recarga recente
+      function checkForRecentRecharge() {
+        // Verificar se há um parâmetro na URL indicando recarga
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("recharge") === "success") {
+          // Mostrar notificação de sucesso
+          showRechargeNotification();
+          // Limpar o parâmetro da URL
+          window.history.replaceState(
+            {},
+            document.title,
+            window.location.pathname
+          );
+          // Atualizar saldo imediatamente
+          setTimeout(loadUserBalance, 1000);
+        }
+      }
+
+      // Função para mostrar notificação de recarga bem-sucedida
+      function showRechargeNotification() {
+        const notification = document.createElement("div");
+        notification.className =
+          "fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50";
+        notification.innerHTML = `
+          <div class="flex items-center space-x-2">
+            <i data-feather="check-circle" class="w-5 h-5"></i>
+            <span>Recarga realizada com sucesso!</span>
+          </div>
+        `;
+        document.body.appendChild(notification);
+
+        // Aplicar ícones feather
+        feather.replace();
+
+        // Remover notificação após 5 segundos
+        setTimeout(() => {
+          notification.remove();
+        }, 5000);
+      }
+
+      // Listener para quando a página ganha foco (usuário volta para a aba)
+      window.addEventListener("focus", function () {
+        loadUserBalance();
+      });
+
+      // Listener para mudanças no localStorage (comunicação entre abas)
+      window.addEventListener("storage", function (e) {
+        if (e.key === "recharge_completed") {
+          loadUserBalance();
+          localStorage.removeItem("recharge_completed");
+        }
+      });
+
+      // Carregar saldo quando a página carregar
+      document.addEventListener("DOMContentLoaded", function () {
+        loadUserBalance();
+        startBalanceUpdates();
+        checkForRecentRecharge();
+      });
+    </script>
+  
+    <script>
+      // Script de inicialização do tema
+      function applyTheme(isDark) {
+        const html = document.documentElement;
+        if (isDark) {
+          html.classList.add('dark');
+          html.classList.remove('light');
+        } else {
+          html.classList.remove('dark');
+          html.classList.add('light');
+        }
+        feather.replace();
+      }
+
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      let isDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+      applyTheme(isDark);
+    </script>
+  </body>
+</html>
+
+<link rel="icon" href="favicon.png" type="image/png" />

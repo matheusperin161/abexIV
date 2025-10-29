@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rota - Mobilidade Urbana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="shortcut icon" href="./img/icone_site.png" type="image/x-icon" />
+  
+    <style>
+      /* Estilos para o tema escuro */
+      .dark .bg-yellow-50 {
+        background-color: #1a202c; /* Cinza escuro */
+      }
+      .dark .bg-yellow-500 {
+        background-color: #2d3748; /* Cinza um pouco mais claro */
+      }
+      .dark .text-white {
+        color: #f7fafc; /* Branco */
+      }
+      .dark .text-yellow-800 {
+        color: #f7fafc; /* Branco */
+      }
+      .dark .text-yellow-600 {
+        color: #a0aec0; /* Cinza claro */
+      }
+      .dark .bg-white {
+        background-color: #2d3748;
+      }
+      .dark .border-yellow-200 {
+        border-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .divide-yellow-100 > :not([hidden]) ~ :not([hidden]) {
+        border-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .hover\:bg-yellow-50:hover {
+        background-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .bg-yellow-100 {
+        background-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .border-yellow-300 {
+        border-color: #4a5568;
+      }
+    </style>
+  </head>
+  <body class="bg-yellow-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-yellow-500 text-white shadow-lg">
+      <div
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-2">
+          <i data-feather="bus" class="w-8 h-8"></i>
+          <h1 class="text-2xl font-bold">Planejamento de Rota</h1>
+        </div>
+        <div class="flex space-x-4">
+          <button
+            onclick="window.location.href='dashboard.html'"
+            class="p-2 rounded-full hover:bg-yellow-600 transition"
+          >
+            <i data-feather="arrow-left" class="w-6 h-6"></i>
+          </button>
+          <button
+            onclick="window.location.href='rating.html'"
+            class="p-2 rounded-full hover:bg-yellow-600 transition"
+            title="Avaliação"
+          >
+            <i data-feather="star" class="w-6 h-6"></i>
+          </button>
+          <button
+            onclick="window.location.href='profile.html'"
+            class="p-2 rounded-full hover:bg-yellow-600 transition"
+            title="Perfil"
+          >
+            <i data-feather="user" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+        <div class="p-6 border-b border-yellow-200">
+          <h2 class="text-2xl font-bold text-yellow-800">Planeje sua rota</h2>
+          <p class="text-yellow-600">
+            Informe origem e destino para encontrar a melhor rota
+          </p>
+        </div>
+
+        <div class="p-6 space-y-4">
+          <div class="flex items-center space-x-3">
+            <div
+              class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center"
+            >
+              <i data-feather="map-pin" class="w-4 h-4 text-yellow-600"></i>
+            </div>
+            <input
+              type="text"
+              placeholder="Origem"
+              class="flex-1 p-3 border border-yellow-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500"
+            />
+          </div>
+
+          <div class="flex items-center space-x-3">
+            <div
+              class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center"
+            >
+              <i data-feather="flag" class="w-4 h-4 text-yellow-600"></i>
+            </div>
+            <input
+              type="text"
+              placeholder="Destino"
+              class="flex-1 p-3 border border-yellow-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500"
+            />
+          </div>
+
+          <div class="pt-4">
+            <button
+              onclick="calcularRota()"
+              class="w-full py-3 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition font-medium"
+            >
+              Calcular Rota
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resultado Rota -->
+      <div
+        id="resultadoRota"
+        class="bg-white rounded-xl shadow-lg overflow-hidden mt-6 hidden"
+      >
+        <div class="p-6 border-b border-yellow-200">
+          <h2 class="text-xl font-bold text-yellow-800">
+            Melhor rota encontrada
+          </h2>
+          <p class="text-yellow-600">
+            Siga as instruções abaixo para chegar ao seu destino
+          </p>
+        </div>
+
+        <div class="p-6">
+          <div class="flex items-start space-x-4 mb-6">
+            <div
+              class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center mt-1"
+            >
+              <i data-feather="map-pin" class="w-5 h-5 text-yellow-600"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-yellow-800">Terminal Central</h3>
+              <p class="text-yellow-600">Partida</p>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-4 mb-6">
+            <div
+              class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center mt-1"
+            >
+              <i data-feather="arrow-right" class="w-5 h-5 text-yellow-600"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-yellow-800">Linha 01 - Cristo Rei</h3>
+              <p class="text-yellow-600">
+                Embarcar no ponto A - Tempo estimado: 5 min
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-4 mb-6">
+            <div
+              class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center mt-1"
+            >
+              <i data-feather="arrow-right" class="w-5 h-5 text-yellow-600"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-yellow-800">Descer no ponto C</h3>
+              <p class="text-yellow-600">
+                Av. Principal - Tempo estimado: 15 min
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-start space-x-4">
+            <div
+              class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center mt-1"
+            >
+              <i data-feather="flag" class="w-5 h-5 text-yellow-600"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-yellow-800">Shopping Center</h3>
+              <p class="text-yellow-600">Destino final - Tempo total: 20 min</p>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-yellow-200">
+            <button
+              class="w-full py-3 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition font-medium"
+            >
+              <i data-feather="share-2" class="w-5 h-5 inline mr-2"></i>
+              Compartilhar rota
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      feather.replace();
+
+      function calcularRota() {
+        document.getElementById("resultadoRota").classList.remove("hidden");
+        window.scrollTo({
+          top: document.getElementById("resultadoRota").offsetTop - 20,
+          behavior: "smooth",
+        });
+      }
+    </script>
+  
+    <script>
+      // Script de inicialização do tema
+      function applyTheme(isDark) {
+        const html = document.documentElement;
+        if (isDark) {
+          html.classList.add('dark');
+          html.classList.remove('light');
+        } else {
+          html.classList.remove('dark');
+          html.classList.add('light');
+        }
+        feather.replace();
+      }
+
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      let isDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+      applyTheme(isDark);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil - Mobilidade Urbana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="shortcut icon" href="./img/icone_site.png" type="image/x-icon" />
+    <style>
+      /* Estilos para o tema escuro */
+      .dark .bg-yellow-50 {
+        background-color: #1a202c; /* Cinza escuro */
+      }
+      .dark .bg-yellow-500 {
+        background-color: #2d3748; /* Cinza um pouco mais claro */
+      }
+      .dark .text-white {
+        color: #f7fafc; /* Branco */
+      }
+      .dark .bg-yellow-theme {
+        background-color: rgba(45, 55, 72, 0.9); /* Fundo do card escuro */
+      }
+      .dark .text-yellow-900 {
+        color: #f7fafc; /* Branco */
+      }
+      .dark .text-yellow-700 {
+        color: #a0aec0; /* Cinza claro */
+      }
+      .dark .text-yellow-800 {
+        color: #cbd5e0; /* Cinza mais claro */
+      }
+      .dark .bg-white {
+        background-color: #2d3748;
+      }
+    </style>
+    <style>
+      .bg-yellow-theme {
+        background-color: rgba(255, 236, 179, 0.9);
+      }
+    </style>
+  </head>
+  <body class="bg-yellow-50 min-h-screen">
+    <div id="vanta-bg" class="fixed inset-0 -z-10"></div>
+
+    <!-- Header -->
+    <header class="bg-yellow-500 text-white shadow-lg">
+      <div
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-2">
+          <button
+            onclick="goBack()"
+            class="px-3 py-2 bg-yellow-600 rounded-lg hover:bg-yellow-700 transition mr-4"
+          >
+            <i data-feather="arrow-left" class="w-6 h-6"></i>
+          </button>
+          <i data-feather="user" class="w-8 h-8"></i>
+          <h1 class="text-2xl font-bold">Meu Perfil</h1>
+          <!-- Botão de Alternância de Tema -->
+          <button id="theme-toggle" class="ml-4 p-2 bg-yellow-600 rounded-lg hover:bg-yellow-700 transition">
+            <i data-feather="moon" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+      <div
+        class="max-w-4xl mx-auto bg-yellow-theme bg-opacity-90 rounded-xl shadow-2xl overflow-hidden"
+      >
+        <div class="p-8">
+          <!-- Profile Header -->
+          <div class="flex flex-col md:flex-row items-center mb-8">
+            <div
+              class="w-32 h-32 bg-yellow-400 rounded-full flex items-center justify-center mb-4 md:mb-0 md:mr-6"
+            >
+              <i data-feather="user" class="w-16 h-16 text-yellow-800"></i>
+            </div>
+            <div class="text-center md:text-left">
+              <h2 id="userName" class="text-3xl font-bold text-yellow-900 mb-2">
+                Carregando...
+              </h2>
+              <p id="userEmail" class="text-yellow-700 text-lg">
+                Carregando...
+              </p>
+              <p class="text-yellow-600">Usuário desde: Janeiro 2024</p>
+            </div>
+          </div>
+
+          <!-- Profile Information -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Personal Information -->
+            <div class="bg-white bg-opacity-50 rounded-lg p-6">
+              <h3
+                class="text-xl font-bold text-yellow-900 mb-4 flex items-center"
+              >
+                <i data-feather="info" class="w-5 h-5 mr-2"></i>
+                Informações Pessoais
+              </h3>
+              <form id="profileForm" class="space-y-3">
+                <div>
+                  <label class="block text-yellow-800 font-medium"
+                    >Nome de Usuário</label
+                  >
+                  <input
+                    type="text"
+                    id="usernameInput"
+                    class="w-full p-2 border border-yellow-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500"
+                    placeholder="Carregando..."
+                  />
+                </div>
+                <div>
+                  <label class="block text-yellow-800 font-medium"
+                    >E-mail</label
+                  >
+                  <input
+                    type="email"
+                    id="emailInput"
+                    class="w-full p-2 border border-yellow-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500"
+                    placeholder="Carregando..."
+                  />
+                </div>
+                <div>
+                  <label class="block text-yellow-800 font-medium"
+                    >Nova Senha (deixe em branco para manter a atual)</label
+                  >
+                  <input
+                    type="password"
+                    id="passwordInput"
+                    class="w-full p-2 border border-yellow-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500"
+                    placeholder="Digite uma nova senha (opcional)"
+                  />
+                </div>
+                <div>
+                  <label class="block text-yellow-800 font-medium"
+                    >Confirmar Nova Senha</label
+                  >
+                  <input
+                    type="password"
+                    id="confirmPasswordInput"
+                    class="w-full p-2 border border-yellow-300 rounded-lg focus:ring-yellow-500 focus:border-yellow-500"
+                    placeholder="Confirme a nova senha"
+                  />
+                </div>
+              </form>
+            </div>
+
+            <!-- Transport Information -->
+            <div class="bg-white bg-opacity-50 rounded-lg p-6">
+              <h3
+                class="text-xl font-bold text-yellow-900 mb-4 flex items-center"
+              >
+                <i data-feather="credit-card" class="w-5 h-5 mr-2"></i>
+                Cartão de Transporte
+              </h3>
+              <div class="space-y-3">
+                <div>
+                  <label class="block text-yellow-800 font-medium"
+                    >Número do Cartão</label
+                  >
+                  <p class="text-yellow-700">**** **** **** 1234</p>
+                </div>
+                <div>
+                  <label class="block text-yellow-800 font-medium"
+                    >Saldo Atual</label
+                  >
+                  <p id="currentBalance" class="text-yellow-700 text-lg font-bold">Carregando Saldo...</p>
+                </div>
+                <div>
+                  <label class="block text-yellow-800 font-medium"
+                    >Tipo de Cartão</label
+                  >
+                  <p class="text-yellow-700">Estudante</p>
+                </div>
+                <div>
+                  <label class="block text-yellow-800 font-medium"
+                    >Última Recarga</label
+                  >
+                  <p class="text-yellow-700">20/12/2024 - R$ 30,00</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Usage Statistics -->
+            <div class="bg-white bg-opacity-50 rounded-lg p-6">
+              <h3
+                class="text-xl font-bold text-yellow-900 mb-4 flex items-center"
+              >
+                <i data-feather="bar-chart" class="w-5 h-5 mr-2"></i>
+                Estatísticas de Uso
+              </h3>
+              <div class="space-y-3">
+                <div>
+                  <label class="block text-yellow-800 font-medium"
+                    >Viagens este mês</label
+                  >
+                  <p class="text-yellow-700 text-lg font-bold">42 viagens</p>
+                </div>
+                <div>
+                  <label class="block text-yellow-800 font-medium"
+                    >Gasto médio mensal</label
+                  >
+                  <p class="text-yellow-700">R$ 85,00</p>
+                </div>
+                <div>
+                  <label class="block text-yellow-800 font-medium"
+                    >Linha mais utilizada</label
+                  >
+                  <p class="text-yellow-700">Linha 001 - Centro/Bairro</p>
+                </div>
+                <div>
+                  <label class="block text-yellow-800 font-medium"
+                    >Economia com desconto</label
+                  >
+                  <p class="text-yellow-700 text-green-600 font-bold">
+                    R$ 42,50
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Preferences -->
+            <div class="bg-white bg-opacity-50 rounded-lg p-6">
+              <h3
+                class="text-xl font-bold text-yellow-900 mb-4 flex items-center"
+              >
+                <i data-feather="settings" class="w-5 h-5 mr-2"></i>
+                Preferências
+              </h3>
+              <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                  <label class="text-yellow-800 font-medium"
+                    >Notificações por email</label
+                  >
+                  <div
+                    class="w-12 h-6 bg-yellow-400 rounded-full relative cursor-pointer"
+                  >
+                    <div
+                      class="w-5 h-5 bg-white rounded-full absolute top-0.5 right-0.5 transition-all"
+                    ></div>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between">
+                  <label class="text-yellow-800 font-medium"
+                    >Notificações push</label
+                  >
+                  <div
+                    class="w-12 h-6 bg-gray-300 rounded-full relative cursor-pointer"
+                  >
+                    <div
+                      class="w-5 h-5 bg-white rounded-full absolute top-0.5 left-0.5 transition-all"
+                    ></div>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-yellow-800 font-medium"
+                    >Tema preferido</label
+                  >
+                  <p class="text-yellow-700">Claro</p>
+                </div>
+                <div>
+                  <label class="block text-yellow-800 font-medium"
+                    >Idioma</label
+                  >
+                  <p class="text-yellow-700">Português (Brasil)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="mt-8 flex flex-col sm:flex-row gap-4">
+            <button
+              id="updateProfileBtn"
+              onclick="updateProfile()"
+              class="flex-1 bg-yellow-500 text-white px-6 py-3 rounded-lg hover:bg-yellow-600 transition flex items-center justify-center"
+            >
+              <i data-feather="save" class="w-5 h-5 mr-2"></i>
+              Salvar Alterações
+            </button>
+            <button
+              onclick="window.location.href='recarga.html'"
+              class="flex-1 bg-yellow-400 text-yellow-900 px-6 py-3 rounded-lg hover:bg-yellow-500 transition flex items-center justify-center"
+            >
+              <i data-feather="credit-card" class="w-5 h-5 mr-2"></i>
+              Recarregar Cartão
+            </button>
+            <button
+              class="flex-1 bg-yellow-300 text-yellow-900 px-6 py-3 rounded-lg hover:bg-yellow-400 transition flex items-center justify-center"
+            >
+              <i data-feather="download" class="w-5 h-5 mr-2"></i>
+              Baixar Extrato
+            </button>
+          </div>
+
+          <!-- Messages -->
+          <div
+            id="successMessage"
+            class="hidden mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded"
+          ></div>
+          <div
+            id="errorMessage"
+            class="hidden mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded"
+          ></div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      AOS.init();
+      feather.replace();
+
+      function goBack() {
+        window.history.back();
+      }
+
+      // Função para carregar dados do perfil
+      async function loadUserProfile() {
+        try {
+          const response = await fetch("/api/profile", {
+            method: "GET",
+            credentials: "include",
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+
+            // Atualizar elementos da página
+            document.getElementById("userName").textContent = data.username;
+            document.getElementById("userEmail").textContent = data.email;
+            document.getElementById("usernameInput").value = data.username;
+            document.getElementById("emailInput").value = data.email;
+          } else if (response.status === 401) {
+            // Usuário não autenticado, redirecionar para login
+            window.location.href = "login.html";
+          } else {
+            showError("Erro ao carregar dados do perfil");
+          }
+        } catch (error) {
+          console.error("Erro ao carregar perfil:", error);
+          showError("Erro de conexão ao carregar perfil");
+        }
+      }
+
+      // Função para atualizar perfil
+      async function updateProfile() {
+        const username = document.getElementById("usernameInput").value;
+        const email = document.getElementById("emailInput").value;
+        const password = document.getElementById("passwordInput").value;
+        const confirmPassword = document.getElementById(
+          "confirmPasswordInput"
+        ).value;
+        const updateBtn = document.getElementById("updateProfileBtn");
+
+        // Limpar mensagens
+        hideMessages();
+
+        // Validações
+        if (!username.trim() || !email.trim()) {
+          showError("Nome de usuário e e-mail são obrigatórios");
+          return;
+        }
+
+        if (password && password !== confirmPassword) {
+          showError("As senhas não coincidem");
+          return;
+        }
+
+        // Desabilitar botão durante a atualização
+        updateBtn.disabled = true;
+        updateBtn.innerHTML =
+          '<i data-feather="loader" class="w-5 h-5 mr-2 animate-spin"></i>Salvando...';
+        feather.replace();
+
+        try {
+          const requestData = {
+            username: username.trim(),
+            email: email.trim(),
+          };
+
+          // Incluir senha apenas se foi fornecida
+          if (password) {
+            requestData.password = password;
+          }
+
+          const response = await fetch("/api/profile", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify(requestData),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            showSuccess("Perfil atualizado com sucesso!");
+
+            // Atualizar elementos da página
+            document.getElementById("userName").textContent = data.username;
+            document.getElementById("userEmail").textContent = data.email;
+
+            // Limpar campos de senha
+            document.getElementById("passwordInput").value = "";
+            document.getElementById("confirmPasswordInput").value = "";
+          } else {
+            showError(data.error || "Erro ao atualizar perfil");
+          }
+        } catch (error) {
+          console.error("Erro:", error);
+          showError("Erro de conexão. Tente novamente.");
+        } finally {
+          // Reabilitar botão
+          updateBtn.disabled = false;
+          updateBtn.innerHTML =
+            '<i data-feather="save" class="w-5 h-5 mr-2"></i>Salvar Alterações';
+          feather.replace();
+        }
+      }
+
+      // Funções auxiliares para mensagens
+      function showSuccess(message) {
+        const successDiv = document.getElementById("successMessage");
+        successDiv.textContent = message;
+        successDiv.classList.remove("hidden");
+
+        // Esconder após 5 segundos
+        setTimeout(() => {
+          successDiv.classList.add("hidden");
+        }, 5000);
+      }
+
+      function showError(message) {
+        const errorDiv = document.getElementById("errorMessage");
+        errorDiv.textContent = message;
+        errorDiv.classList.remove("hidden");
+      }
+
+      function hideMessages() {
+        document.getElementById("successMessage").classList.add("hidden");
+        document.getElementById("errorMessage").classList.add("hidden");
+      }
+
+      // Carregar dados do perfil quando a página carregar
+      document.addEventListener("DOMContentLoaded", function () {
+        loadUserProfile();
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <script>
+      VANTA.GLOBE({
+        el: "#vanta-bg",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0xffcc00,
+        backgroundColor: 0xfff9e6,
+      });
+    </script>
+  </body>
+</html>
+
+<link rel="icon" href="favicon.png" type="image/png" />
+
+
+    <script>
+      AOS.init();
+      feather.replace();
+
+      function goBack() {
+        window.history.back();
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        fetchUserProfile();
+      });
+
+      async function fetchUserProfile() {
+        try {
+          const response = await fetch('/api/profile');
+          const data = await response.json();
+
+          if (response.ok) {
+            document.getElementById('userName').innerText = data.username;
+            document.getElementById('userEmail').innerText = data.email;
+            document.getElementById('usernameInput').value = data.username;
+            document.getElementById('emailInput').value = data.email;
+            document.getElementById('currentBalance').innerText = `R$ ${parseFloat(data.card_balance).toFixed(2).replace('.', ',')}`;
+          } else {
+            console.error('Erro ao buscar perfil:', data.error);
+            // Redirecionar para login se não autenticado
+            if (response.status === 401) {
+              window.location.href = '/login.html';
+            }
+          }
+        } catch (error) {
+          console.error('Erro na requisição:', error);
+          // Tratar erro de rede ou servidor
+        }
+      }
+
+      async function updateProfile() {
+        const username = document.getElementById('usernameInput').value;
+        const email = document.getElementById('emailInput').value;
+        const password = document.getElementById('passwordInput').value;
+        const confirmPassword = document.getElementById('confirmPasswordInput').value;
+
+        if (password && password !== confirmPassword) {
+          alert('As senhas não coincidem!');
+          return;
+        }
+
+        const updateData = {
+          username: username,
+          email: email,
+        };
+        if (password) {
+          updateData.password = password;
+        }
+
+        try {
+          const response = await fetch('/profile', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updateData),
+          });
+          const data = await response.json();
+
+          if (response.ok) {
+            alert(data.message);
+            fetchUserProfile(); // Atualizar dados após sucesso
+          } else {
+            alert('Erro ao atualizar perfil: ' + data.error);
+          }
+        } catch (error) {
+          console.error('Erro na requisição:', error);
+          alert('Erro na requisição de atualização de perfil.');
+        }
+      }
+    </script>
+  </body>
+</html>
+<script>
+  // Função para aplicar o tema
+  function applyTheme(isDark) {
+    const html = document.documentElement;
+    const toggleButton = document.getElementById('theme-toggle');
+    if (isDark) {
+      html.classList.add('dark');
+      html.classList.remove('light');
+      if (toggleButton) {
+        toggleButton.innerHTML = '<i data-feather="sun" class="w-6 h-6"></i>'; // Ícone Sol
+      }
+    } else {
+      html.classList.remove('dark');
+      html.classList.add('light');
+      if (toggleButton) {
+        toggleButton.innerHTML = '<i data-feather="moon" class="w-6 h-6"></i>'; // Ícone Lua
+      }
+    }
+    feather.replace();
+  }
+
+  // 1. Inicializar o tema
+  const savedTheme = localStorage.getItem('theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  let isDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+  applyTheme(isDark);
+
+  // 2. Lógica do botão de alternância
+  const toggleButton = document.getElementById('theme-toggle');
+  if (toggleButton) {
+    toggleButton.addEventListener('click', () => {
+      isDark = !isDark;
+      applyTheme(isDark);
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+  }
+</script>

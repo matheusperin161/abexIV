@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Mobilidade Urbana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="shortcut icon" href="./img/icone_site.png" type="image/x-icon" />
+    <style>
+      .bg-bus {
+        background-image: url("http://static.photos/transport/1200x630/4");
+        background-size: cover;
+        background-position: center;
+      }
+
+    </style>
+  
+    <style>
+      /* Estilos para o tema escuro */
+      .dark .bg-yellow-50 {
+        background-color: #1a202c; /* Cinza escuro */
+      }
+      .dark .bg-yellow-500 {
+        background-color: #2d3748; /* Cinza um pouco mais claro */
+      }
+      .dark .text-white {
+        color: #f7fafc; /* Branco */
+      }
+      .dark .text-yellow-800 {
+        color: #f7fafc; /* Branco */
+      }
+      .dark .text-yellow-600 {
+        color: #a0aec0; /* Cinza claro */
+      }
+      .dark .bg-white {
+        background-color: #2d3748;
+      }
+      .dark .border-yellow-200 {
+        border-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .divide-yellow-100 > :not([hidden]) ~ :not([hidden]) {
+        border-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .hover\:bg-yellow-50:hover {
+        background-color: #4a5568; /* Cinza escuro */
+      }
+      .dark .bg-yellow-100 {
+        background-color: #4a5568; /* Cinza escuro */
+      }
+    </style>
+  </head>
+  <body class="bg-yellow-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-yellow-500 text-white shadow-lg">
+      <div
+        class="container mx-auto px-4 py-3 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-2">
+          <i data-feather="bus" class="w-8 h-8"></i>
+          <h1 class="text-2xl font-bold">Mobilidade Urbana</h1>
+        </div>
+        <div class="flex space-x-4">
+          <button class="p-2 rounded-full hover:bg-yellow-600 transition">
+            <i data-feather="star" class="w-6 h-6"></i>
+          </button>
+          <button class="p-2 rounded-full hover:bg-yellow-600 transition">
+            <i data-feather="user" class="w-6 h-6"></i>
+          </button>
+          <button
+            onclick="window.location.href='index.html'"
+            class="p-2 rounded-full hover:bg-yellow-600 transition"
+          >
+            <i data-feather="log-out" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card Recarga -->
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition"
+        >
+          <div class="bg-yellow-400 p-4">
+            <i data-feather="credit-card" class="w-8 h-8 text-white"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-yellow-800 mb-2">
+              Recarga de Cartão
+            </h3>
+            <p class="text-yellow-600 mb-4">
+              Recarregue seu cartão de transporte de forma rápida e segura.
+            </p>
+            <button
+              onclick="window.location.href='recarga.html'"
+              class="w-full py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
+            >
+              Acessar
+            </button>
+          </div>
+        </div>
+
+        <!-- Card Acompanhamento -->
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition"
+        >
+          <div class="bg-yellow-400 p-4">
+            <i data-feather="map-pin" class="w-8 h-8 text-white"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-yellow-800 mb-2">
+              Acompanhamento de Ônibus
+            </h3>
+            <p class="text-yellow-600 mb-4">
+              Acompanhe em tempo real a localização dos ônibus das linhas
+              disponíveis.
+            </p>
+            <button
+              onclick="window.location.href='acompanhamento.html'"
+              class="w-full py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
+            >
+              Acessar
+            </button>
+          </div>
+        </div>
+
+        <!-- Card Rota -->
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition"
+        >
+          <div class="bg-yellow-400 p-4">
+            <i data-feather="navigation" class="w-8 h-8 text-white"></i>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-yellow-800 mb-2">
+              Planejamento de Rota
+            </h3>
+            <p class="text-yellow-600 mb-4">
+              Planeje sua rota de forma eficiente com nossas sugestões de
+              trajeto.
+            </p>
+            <button
+              onclick="window.location.href='rota.html'"
+              class="w-full py-2 px-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition"
+            >
+              Acessar
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      feather.replace();
+    </script>
+  
+    <script>
+      // Script de inicialização do tema
+      function applyTheme(isDark) {
+        const html = document.documentElement;
+        if (isDark) {
+          html.classList.add('dark');
+          html.classList.remove('light');
+        } else {
+          html.classList.remove('dark');
+          html.classList.add('light');
+        }
+        feather.replace();
+      }
+
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      let isDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+      applyTheme(isDark);
+    </script>
+  </body>
+</html>
+
+<link rel="icon" href="favicon.png" type="image/png" />
