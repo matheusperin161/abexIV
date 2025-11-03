@@ -1,0 +1,496 @@
+/* ========================================================================
+   ESTILOS AVANÇADOS DO SISTEMA DE NOTIFICAÇÕES
+   ======================================================================== */
+
+/* ========================================================================
+   ANIMAÇÕES
+   ======================================================================== */
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ========================================================================
+   BOTÃO DE NOTIFICAÇÕES
+   ======================================================================== */
+
+#notificationButton {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+#notificationButton:hover {
+  transform: scale(1.1);
+}
+
+#notificationButton.has-unread {
+  animation: pulse 2s infinite;
+}
+
+/* Badge de notificações não lidas */
+#notificationBadge {
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.5);
+}
+
+/* ========================================================================
+   DROPDOWN DE NOTIFICAÇÕES
+   ======================================================================== */
+
+#notificationDropdown {
+  animation: slideIn 0.3s ease-out;
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#notificationDropdown.hidden {
+  animation: fadeOut 0.2s ease-out;
+  display: none;
+}
+
+/* Scrollbar customizado */
+#notificationDropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+#notificationDropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#notificationDropdown::-webkit-scrollbar-thumb {
+  background: #facc15;
+  border-radius: 3px;
+}
+
+#notificationDropdown::-webkit-scrollbar-thumb:hover {
+  background: #eab308;
+}
+
+/* Tema escuro - scrollbar */
+.dark #notificationDropdown::-webkit-scrollbar-thumb {
+  background: #4a5568;
+}
+
+.dark #notificationDropdown::-webkit-scrollbar-thumb:hover {
+  background: #718096;
+}
+
+/* ========================================================================
+   ITENS DE NOTIFICAÇÃO
+   ======================================================================== */
+
+.notification-item {
+  animation: slideIn 0.3s ease-out;
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+  padding-left: 13px;
+}
+
+.notification-item:hover {
+  border-left-color: #facc15;
+  transform: translateX(2px);
+}
+
+.notification-item.line-delay {
+  border-left-color: #f97316;
+}
+
+.notification-item.low-balance {
+  border-left-color: #ef4444;
+}
+
+.notification-item.unread {
+  background-color: rgba(250, 204, 21, 0.05);
+}
+
+.dark .notification-item.unread {
+  background-color: rgba(250, 204, 21, 0.1);
+}
+
+/* Ícone de tipo de notificação */
+.notification-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 16px;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+}
+
+.notification-item.line-delay .notification-icon {
+  background-color: #f97316;
+}
+
+.notification-item.low-balance .notification-icon {
+  background-color: #ef4444;
+}
+
+/* Título da notificação */
+.notification-title {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+.notification-item.unread .notification-title {
+  color: #1f2937;
+}
+
+.dark .notification-item.unread .notification-title {
+  color: #f3f4f6;
+}
+
+/* Mensagem da notificação */
+.notification-message {
+  font-size: 12px;
+  line-height: 1.4;
+  word-break: break-word;
+  margin-bottom: 4px;
+}
+
+/* Hora da notificação */
+.notification-time {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+/* ========================================================================
+   CABEÇALHO DO DROPDOWN
+   ======================================================================== */
+
+#notificationDropdown h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+}
+
+#notificationDropdown h3::before {
+  content: "🔔";
+  margin-right: 8px;
+}
+
+/* Contador de notificações não lidas no cabeçalho */
+.notification-count {
+  display: inline-block;
+  background-color: #ef4444;
+  color: white;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* ========================================================================
+   BOTÃO "MARCAR TODAS COMO LIDAS"
+   ======================================================================== */
+
+#markAllAsRead {
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+#markAllAsRead:hover {
+  background-color: rgba(250, 204, 21, 0.1);
+}
+
+.dark #markAllAsRead:hover {
+  background-color: rgba(250, 204, 21, 0.15);
+}
+
+#markAllAsRead:active {
+  transform: scale(0.98);
+}
+
+/* ========================================================================
+   MENSAGEM DE NENHUMA NOTIFICAÇÃO
+   ======================================================================== */
+
+#noNotificationsMessage {
+  text-align: center;
+  padding: 20px 16px !important;
+  color: #9ca3af;
+}
+
+.dark #noNotificationsMessage {
+  color: #6b7280;
+}
+
+#noNotificationsMessage::before {
+  content: "📭";
+  display: block;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+/* ========================================================================
+   NOTIFICAÇÕES TOAST (OPCIONAL - para notificações emergentes)
+   ======================================================================== */
+
+.notification-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  max-width: 350px;
+  animation: slideIn 0.3s ease-out;
+  z-index: 1000;
+}
+
+.notification-toast.line-delay {
+  border-left: 4px solid #f97316;
+}
+
+.notification-toast.low-balance {
+  border-left: 4px solid #ef4444;
+}
+
+.notification-toast.success {
+  border-left: 4px solid #22c55e;
+}
+
+.dark .notification-toast {
+  background-color: #2d3748;
+  color: #f3f4f6;
+}
+
+.notification-toast-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.notification-toast-message {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.notification-toast-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.notification-toast-close:hover {
+  opacity: 1;
+}
+
+/* ========================================================================
+   RESPONSIVIDADE
+   ======================================================================== */
+
+@media (max-width: 640px) {
+  #notificationDropdown {
+    width: 90vw !important;
+    max-width: 350px;
+    right: -50vw !important;
+    left: auto !important;
+    transform: translateX(50%);
+  }
+
+  .notification-item {
+    padding: 12px 12px;
+  }
+
+  .notification-title {
+    font-size: 13px;
+  }
+
+  .notification-message {
+    font-size: 11px;
+  }
+
+  .notification-toast {
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+}
+
+/* ========================================================================
+   TEMAS ADICIONAIS
+   ======================================================================== */
+
+/* Tema com fundo gradiente */
+.notification-dropdown-gradient {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+
+.dark .notification-dropdown-gradient {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+}
+
+/* Tema com borda */
+.notification-dropdown-bordered {
+  border: 1px solid #fcd34d;
+}
+
+.dark .notification-dropdown-bordered {
+  border: 1px solid #4a5568;
+}
+
+/* ========================================================================
+   ESTADOS ESPECIAIS
+   ======================================================================== */
+
+/* Notificação crítica (saldo muito baixo) */
+.notification-item.critical {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-left-color: #dc2626;
+}
+
+.notification-item.critical .notification-title {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+/* Notificação de sucesso */
+.notification-item.success {
+  border-left-color: #22c55e;
+}
+
+.notification-item.success .notification-icon {
+  background-color: #22c55e;
+}
+
+/* Notificação de aviso */
+.notification-item.warning {
+  border-left-color: #eab308;
+}
+
+.notification-item.warning .notification-icon {
+  background-color: #eab308;
+  color: #1f2937;
+}
+
+/* ========================================================================
+   ACESSIBILIDADE
+   ======================================================================== */
+
+/* Focus visível para navegação por teclado */
+#notificationButton:focus-visible {
+  outline: 2px solid #facc15;
+  outline-offset: 2px;
+}
+
+.notification-item:focus-visible {
+  outline: 2px solid #facc15;
+  outline-offset: -2px;
+}
+
+#markAllAsRead:focus-visible {
+  outline: 2px solid #facc15;
+  outline-offset: 2px;
+}
+
+/* Reduzir animações para usuários que preferem movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  #notificationDropdown,
+  .notification-item,
+  .notification-toast,
+  #notificationBadge {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  #notificationButton:hover {
+    transform: none;
+  }
+}
+
+/* ========================================================================
+   IMPRESSÃO
+   ======================================================================== */
+
+@media print {
+  #notificationButton,
+  #notificationDropdown {
+    display: none !important;
+  }
+}
+
+/* ========================================================================
+   SUPORTE A DARK MODE AVANÇADO
+   ======================================================================== */
+
+.dark #notificationDropdown {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+}
+
+.dark .notification-item {
+  border-color: #4b5563;
+}
+
+.dark .notification-item:hover {
+  background-color: #2d3748;
+}
+
+.dark .notification-item.unread {
+  background-color: rgba(250, 204, 21, 0.08);
+}
+
+.dark .notification-title {
+  color: #f3f4f6;
+}
+
+.dark .notification-message {
+  color: #d1d5db;
+}
+
+.dark .notification-time {
+  color: #9ca3af;
+}

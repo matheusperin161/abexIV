@@ -13,6 +13,9 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="shortcut icon" href="./img/icone_site.png" type="image/x-icon" />
+    <!-- Sistema de Notificações -->
+    <link rel="stylesheet" href="./notifications.css" />
+    <script src="./notifications.js"></script>
   
     <style>
       /* Estilos para o tema escuro */
@@ -499,6 +502,18 @@
             // Atualizar informações na confirmação
             document.querySelector('#recargaConfirmada .font-medium:nth-child(2)').textContent = `R$ ${selectedAmount.toFixed(2).replace('.', ',')}`;
             document.querySelector('#recargaConfirmada .font-medium:nth-child(4)').textContent = new Date().toLocaleString('pt-BR');
+            
+            // Adicionar notificação ao sistema de notificações
+            if (window.NotificationSystem) {
+              window.NotificationSystem.add(
+                'Recarga Realizada com Sucesso! ✅',
+                `Seu cartão foi recarregado com R$ ${selectedAmount.toFixed(2).replace('.', ',')}. O saldo estará disponível em breve.`,
+                'success'
+              );
+            } else {
+              // Fallback se o sistema de notificações não estiver disponível
+              console.log('Sistema de notificações não disponível');
+            }
             
             // Notificar outras abas sobre a recarga
             localStorage.setItem('recharge_completed', Date.now().toString());

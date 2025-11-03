@@ -13,6 +13,8 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="https://unpkg.com/feather-icons"></script>
     <link rel="shortcut icon" href="./img/icone_site.png" type="image/x-icon" />
+    <!-- Sistema de Notificações -->
+    <link rel="stylesheet" href="./notifications.css" />
     <style>
       .bg-bus {
         background-image: url("http://static.photos/transport/1200x630/4");
@@ -73,7 +75,32 @@
           <i data-feather="bus" class="w-8 h-8"></i>
           <h1 class="text-2xl font-bold">Mobilidade Urbana</h1>
         </div>
-        <div class="flex space-x-4">
+        <div class="flex space-x-4 relative">
+          <!-- Botão de Notificações -->
+          <button
+            id="notificationButton"
+            class="p-2 rounded-full hover:bg-yellow-600 transition relative"
+            title="Notificações"
+          >
+            <i data-feather="bell" class="w-6 h-6"></i>
+            <span id="notificationBadge" class="absolute top-0 right-0 block h-3 w-3 rounded-full ring-2 ring-yellow-500 bg-red-500 hidden"></span>
+          </button>
+          <!-- Container de Notificações -->
+          <div
+            id="notificationDropdown"
+            class="absolute right-0 mt-12 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-50 hidden"
+          >
+            <div class="py-2">
+              <h3 class="text-lg font-semibold px-4 py-2 text-yellow-800 dark:text-white border-b dark:border-gray-700">Notificações</h3>
+              <div id="notificationList" class="max-h-80 overflow-y-auto">
+                <!-- Notificações serão inseridas aqui -->
+                <p class="text-gray-500 dark:text-gray-400 p-4 text-sm" id="noNotificationsMessage">Nenhuma notificação nova.</p>
+              </div>
+              <div class="border-t dark:border-gray-700">
+                <button id="markAllAsRead" class="w-full text-center text-sm text-yellow-600 dark:text-yellow-400 hover:bg-yellow-50 dark:hover:bg-gray-700 py-2 transition">Marcar todas como lidas</button>
+              </div>
+            </div>
+          </div>
           <button
             onclick="window.location.href='rating.html'"
             class="p-2 rounded-full hover:bg-yellow-600 transition"
@@ -284,14 +311,186 @@
         }
       });
 
-      // Carregar saldo quando a página carregar
+      // Variável para armazenar as notificações
+      let notifications = [];
+      const MIN_BALANCE = 5.00; // Saldo mínimo configurado
+
+      // Função para exibir uma notificação na lista
+      function displayNotification(notification) {
+        const list = document.getElementById('notificationList');
+        const noNotificationsMessage = document.getElementById('noNotificationsMessage');
+        
+        if (noNotificationsMessage) {
+          noNotificationsMessage.remove();
+        }
+
+        const item = document.createElement('div');
+        item.className = 'p-4 border-b dark:border-gray-700 hover:bg-yellow-50 dark:hover:bg-gray-700 cursor-pointer transition';
+        item.innerHTML = `
+          <p class="text-sm font-medium text-yellow-800 dark:text-white">${notification.title}</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">${notification.message}</p>
+          <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">${notification.time}</p>
+        `;
+        list.prepend(item);
+        
+        // Atualizar o badge
+        updateNotificationBadge();
+      }
+
+      // Função para atualizar o badge de notificação
+      function updateNotificationBadge() {
+        const badge = document.getElementById('notificationBadge');
+        const unreadCount = notifications.filter(n => !n.read).length;
+        if (unreadCount > 0) {
+          badge.classList.remove('hidden');
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+
+      // Função para adicionar uma nova notificação
+      function addNotification(title, message, type) {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        const newNotification = {
+          id: Date.now(),
+          title: title,
+          message: message,
+          time: timeString,
+          read: false,
+          type: type // 'line_delay' ou 'low_balance'
+        };
+        notifications.unshift(newNotification);
+        displayNotification(newNotification);
+        // Armazenar no localStorage para persistência (opcional, mas recomendado)
+        localStorage.setItem('notifications', JSON.stringify(notifications));
+      }
+
+      // Função para carregar notificações salvas
+      function loadNotifications() {
+        const savedNotifications = localStorage.getItem('notifications');
+        if (savedNotifications) {
+          notifications = JSON.parse(savedNotifications);
+          notifications.forEach(n => displayNotification(n));
+        }
+        updateNotificationBadge();
+      }
+
+      // Função para simular notificações de atraso de linha
+      function checkLineDelays() {
+        // Simulação: em um sistema real, isso viria de um WebSocket ou polling de API
+        const lines = [
+          { line: 'Linha 101 - Centro/Bairro', delay: 15, reason: 'Acidente na via', affected: Math.random() > 0.5 },
+          { line: 'Linha 205 - Terminal/Universidade', delay: 5, reason: 'Tráfego intenso', affected: Math.random() > 0.8 },
+          { line: 'Linha 310 - Industrial/Comercial', delay: 30, reason: 'Problema mecânico', affected: Math.random() > 0.95 }
+        ];
+
+        lines.forEach(line => {
+          if (line.affected && Math.random() > 0.7) { // Simula a chance de notificação
+            const title = `Atraso na ${line.line}`;
+            const message = `Motivo: ${line.reason}. Tempo estimado de atraso: ${line.delay} minutos.`;
+            // Verifica se a notificação já existe para evitar duplicidade em simulações
+            const exists = notifications.some(n => n.title === title && n.type === 'line_delay');
+            if (!exists) {
+              addNotification(title, message, 'line_delay');
+            }
+          }
+        });
+      }
+
+      // Função para verificar saldo baixo
+      function checkLowBalance(currentBalance) {
+        if (currentBalance < MIN_BALANCE) {
+          const title = 'Atenção: Saldo Baixo!';
+          const message = `Seu saldo atual é de R$ ${currentBalance.toFixed(2).replace(".", ",")}. Recarregue para evitar interrupções.`;
+          // Verifica se a notificação de saldo baixo já foi emitida recentemente
+          const exists = notifications.some(n => n.type === 'low_balance' && (Date.now() - n.id) < (1000 * 60 * 60 * 24)); // Notifica apenas uma vez por dia
+          if (!exists) {
+            addNotification(title, message, 'low_balance');
+          }
+        }
+      }
+
+      // Modificar loadUserBalance para incluir a verificação de saldo baixo
+      async function loadUserBalance() {
+        try {
+          const response = await fetch("/api/balance", {
+            method: "GET",
+            credentials: "include",
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            const balanceElement = document.getElementById("cardBalance");
+            const currentBalance = data.balance;
+            balanceElement.textContent = `R$ ${currentBalance
+              .toFixed(2)
+              .replace(".", ",")}`;
+            
+            // Nova verificação de saldo baixo
+            checkLowBalance(currentBalance);
+
+          } else if (response.status === 401) {
+            // Usuário não autenticado, redirecionar para login
+            window.location.href = "login.html";
+          }
+        } catch (error) {
+          console.error("Erro ao carregar saldo:", error);
+        }
+      }
+
+      // Função para iniciar as verificações periódicas
+      function startRealTimeChecks() {
+        // Verifica atrasos a cada 60 segundos (simulação de tempo real)
+        setInterval(checkLineDelays, 60000);
+        // O checkLowBalance já está dentro do loadUserBalance, que é chamado a cada 30s
+      }
+
+      // Event Listeners para o dropdown de notificação
+      document.addEventListener('DOMContentLoaded', () => {
+        const notificationButton = document.getElementById('notificationButton');
+        const notificationDropdown = document.getElementById('notificationDropdown');
+        const markAllAsReadButton = document.getElementById('markAllAsRead');
+
+        // Toggle do dropdown
+        notificationButton.addEventListener('click', (event) => {
+          event.stopPropagation();
+          notificationDropdown.classList.toggle('hidden');
+          // Marcar todas como lidas ao abrir
+          notifications.forEach(n => n.read = true);
+          localStorage.setItem('notifications', JSON.stringify(notifications));
+          updateNotificationBadge();
+        });
+
+        // Fechar o dropdown ao clicar fora
+        document.addEventListener('click', (event) => {
+          if (!notificationDropdown.classList.contains('hidden') && !notificationButton.contains(event.target)) {
+            notificationDropdown.classList.add('hidden');
+          }
+        });
+
+        // Marcar todas como lidas (botão dentro do dropdown)
+        markAllAsReadButton.addEventListener('click', () => {
+          notifications.forEach(n => n.read = true);
+          localStorage.setItem('notifications', JSON.stringify(notifications));
+          updateNotificationBadge();
+          notificationDropdown.classList.add('hidden');
+        });
+      });
+
+        // Carregar saldo quando a página carregar
       document.addEventListener("DOMContentLoaded", function () {
+        loadNotifications(); // Carregar notificações salvas
         loadUserBalance();
         startBalanceUpdates();
         checkForRecentRecharge();
+        startRealTimeChecks(); // Iniciar verificações em tempo real
       });
     </script>
   
+    <!-- Script do Sistema de Notificações -->
+    <script src="./notifications.js"></script>
+    
     <script>
       // Script de inicialização do tema
       function applyTheme(isDark) {
