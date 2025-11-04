@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - BusApp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #FFE8D6 0%, #FFD7BA 50%, #FFC8A2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            display: flex;
+            width: 950px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(255, 140, 0, 0.15);
+            border: 1px solid rgba(255, 140, 0, 0.1);
+        }
+        
+        .left-panel {
+            flex: 0.45;
+            background: linear-gradient(135deg, #FFB347 0%, #FF8C00 100%);
+            padding: 40px 35px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% {
+                transform: rotate(45deg) translateX(-100%);
+            }
+            100% {
+                transform: rotate(45deg) translateX(100%);
+            }
+        }
+        
+        .logo h1 {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tagline {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .features {
+            margin-top: 30px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-right: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px;
+            border-radius: 10px;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .right-panel {
+            flex: 0.55;
+            padding: 40px 45px;
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        
+        .form-header {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .form-header h2 {
+            color: #FF8C00;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .form-header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .form-container {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .form-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .form-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #FFB347 0%, #FF8C00 100%);
+            border-radius: 3px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 248, 225, 0.5);
+        }
+        
+        .form-group input:focus {
+            border-color: #FF8C00;
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.1);
+        }
+        
+        .form-group.success input {
+            border-color: #28a745;
+            background: rgba(40, 167, 69, 0.05);
+        }
+        
+        .form-group.error input {
+            border-color: #dc3545;
+            background: rgba(220, 53, 69, 0.05);
+        }
+        
+        .form-group .error-message {
+            color: #dc3545;
+            font-size: 0.8rem;
+            margin-top: 6px;
+            display: none;
+        }
+        
+        .form-group.error .error-message {
+            display: block;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #FF8C00 0%, #FF6B00 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+        }
+        
+        button:hover::before {
+            left: 100%;
+        }
+        
+        .login-link {
+            text-align: center;
+            color: #666;
+            padding: 15px 0 5px;
+            border-top: 1px solid rgba(255, 140, 0, 0.2);
+        }
+        
+        .login-link a {
+            color: #FF8C00;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+            position: relative;
+        }
+        
+        .login-link a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #FF8C00;
+            transition: width 0.3s ease;
+        }
+        
+        .login-link a:hover {
+            color: #FF6B00;
+        }
+        
+        .login-link a:hover::after {
+            width: 100%;
+        }
+        
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 1000;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+        }
+        
+        .toast.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .toast.error {
+            background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @media (max-width: 1000px) {
+            .container {
+                flex-direction: column;
+                width: 95%;
+                height: auto;
+                max-width: 500px;
+            }
+            
+            .left-panel {
+                padding: 30px 25px;
+                text-align: center;
+            }
+            
+            .right-panel {
+                padding: 30px 25px;
+            }
+            
+            .form-container {
+                overflow-y: visible;
+            }
+            
+            .features {
+                display: flex;
+                justify-content: space-around;
+                margin-top: 20px;
+            }
+            
+            .feature-item {
+                flex-direction: column;
+                text-align: center;
+                margin-bottom: 0;
+            }
+            
+            .feature-icon {
+                margin-right: 0;
+                margin-bottom: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <div class="logo">
+                <h1>BusApp</h1>
+                <p class="tagline">Sua jornada começa aqui</p>
+            </div>
+            <div class="features">
+                <div class="feature-item">
+                    <span class="feature-icon">🚌</span>
+                    <span>Rotas otimizadas</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⏰</span>
+                    <span>Horários em tempo real</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">💰</span>
+                    <span>Economia garantida</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="right-panel">
+            <div class="form-header">
+                <h2>Crie sua conta</h2>
+                <p>Preencha seus dados abaixo</p>
+            </div>
+            
+            <div class="form-container">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="name">Nome completo</label>
+                        <input type="text" id="name" name="name" required>
+                        <div class="error-message">Por favor, insira seu nome completo (mínimo 3 caracteres)</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" required>
+                        <div class="error-message">Por favor, insira um e-mail válido</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <input type="password" id="password" name="password" required>
+                        <div class="error-message">A senha deve ter pelo menos 6 caracteres, incluindo letras e números</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Número de telefone</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="(11) 99999-9999">
+                        <div class="error-message">Por favor, insira um número de telefone válido</div>
+                    </div>
+                    
+                    <button type="submit">Cadastrar</button>
+                </form>
+            </div>
+            
+            <div class="login-link">
+                <p>Já tem uma conta? <a href="login.html">Faça login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // Elementos do DOM
+        const form = document.getElementById('registerForm');
+        const toast = document.getElementById('toast');
+        
+        // Campos do formulário
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const phoneInput = document.getElementById('phone');
+        
+        // Expressões regulares para validação
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
+        const phoneRegex = /^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/;
+        
+        // Função para mostrar notificação
+        function showToast(message, type) {
+            toast.textContent = message;
+            toast.className = 'toast ' + type;
+            
+            setTimeout(() => {
+                toast.className = 'toast';
+            }, 3000);
+        }
+        
+        // Funções de validação individuais
+        function validateName() {
+            const nameValue = nameInput.value.trim();
+            const formGroup = nameInput.parentElement;
+            
+            if (nameValue.length < 3) {
+                formGroup.className = 'form-group error';
+                return false;
+            } else {
+                formGroup.className = 'form-group success';
+                return true;
+            }
+        }
+        
+        function validateEmail() {
+            const emailValue = emailInput.value.trim();
+            const formGroup = emailInput.parentElement;
+            
+            if (!emailRegex.test(emailValue)) {
+                formGroup.className = 'form-group error';
+                return false;
+            } else {
+                formGroup.className = 'form-group success';
+                return true;
+            }
+        }
+        
+        function validatePassword() {
+            const passwordValue = passwordInput.value;
+            const formGroup = passwordInput.parentElement;
+            
+            if (!passwordRegex.test(passwordValue)) {
+                formGroup.className = 'form-group error';
+                return false;
+            } else {
+                formGroup.className = 'form-group success';
+                return true;
+            }
+        }
+        
+        function validatePhone() {
+            const phoneValue = phoneInput.value.trim();
+            const formGroup = phoneInput.parentElement;
+            
+            if (!phoneRegex.test(phoneValue)) {
+                formGroup.className = 'form-group error';
+                return false;
+            } else {
+                formGroup.className = 'form-group success';
+                return true;
+            }
+        }
+        
+        // Formatação do telefone
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length <= 11) {
+                value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+                value = value.replace(/(\d)(\d{4})$/, '$1-$2');
+                e.target.value = value;
+            }
+            
+            validatePhone();
+        });
+        
+        // Validação em tempo real
+        nameInput.addEventListener('input', validateName);
+        emailInput.addEventListener('input', validateEmail);
+        passwordInput.addEventListener('input', validatePassword);
+        phoneInput.addEventListener('input', validatePhone);
+        
+        // Validação ao sair do campo
+        nameInput.addEventListener('blur', validateName);
+        emailInput.addEventListener('blur', validateEmail);
+        passwordInput.addEventListener('blur', validatePassword);
+        phoneInput.addEventListener('blur', validatePhone);
+        
+        // Validação do formulário completo
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const isNameValid = validateName();
+            const isEmailValid = validateEmail();
+            const isPasswordValid = validatePassword();
+            const isPhoneValid = validatePhone();
+            
+            if (isNameValid && isEmailValid && isPasswordValid && isPhoneValid) {
+                // Simulação de envio bem-sucedido
+                showToast('Cadastro realizado com sucesso!', 'success');
+                
+                // Limpar formulário
+                form.reset();
+                
+                const formGroups = document.querySelectorAll('.form-group');
+                formGroups.forEach(group => {
+                    group.className = 'form-group';
+                });
+                
+                nameInput.focus();
+            } else {
+                showToast('Por favor, corrija os erros no formulário.', 'error');
+            }
+        });
+    </script>
+</body>
+</html>
